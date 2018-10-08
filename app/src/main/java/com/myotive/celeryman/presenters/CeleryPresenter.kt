@@ -1,0 +1,25 @@
+package com.myotive.celeryman.presenters
+
+import android.content.Context
+import android.net.Uri
+import android.widget.ImageView
+import com.bumptech.glide.Glide
+import timber.log.Timber
+
+class CeleryPresenter(private val context: Context) {
+    fun loadCeleryMan(imagePath: String, imageView: ImageView) {
+
+        Timber.i("Loading image: $imagePath")
+
+        Glide.with(context)
+                .load(Uri.parse(imagePath))
+                .into(imageView)
+    }
+
+    fun getRandomImage(): String {
+        val assets = context.resources?.assets?.list("")?.filter { it.endsWith("gif") }
+        val random = assets?.shuffled()?.first()
+
+        return "file:///android_asset/$random"
+    }
+}
