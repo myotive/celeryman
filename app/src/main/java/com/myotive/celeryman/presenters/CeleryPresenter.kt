@@ -6,8 +6,13 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import timber.log.Timber
 
-class CeleryPresenter(private val context: Context) {
-    fun loadCeleryMan(imagePath: String, imageView: ImageView) {
+interface CeleryInterface{
+    fun loadCeleryMan(imagePath: String, imageView: ImageView)
+    fun getRandomImage(): String
+}
+
+class CeleryPresenter(private val context: Context) : CeleryInterface {
+    override fun loadCeleryMan(imagePath: String, imageView: ImageView) {
 
         Timber.i("Loading image: $imagePath")
 
@@ -16,7 +21,7 @@ class CeleryPresenter(private val context: Context) {
                 .into(imageView)
     }
 
-    fun getRandomImage(): String {
+    override fun getRandomImage(): String {
         val assets = context.resources?.assets?.list("")?.filter { it.endsWith("gif") }
         val random = assets?.shuffled()?.first()
 
